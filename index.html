@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Hash</title>
+  <title>Electron download</title>
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,11 +13,11 @@
   <script>
     function downloadFiles() {
       const download1 = document.getElementById("download1");
-      console.log("Downloading ", download1.href);
+      console.log("Downloading 1 ", download1.href);
       download1.click();
 
       const download2 = document.getElementById("download2");
-      console.log("Downloading ", download2.href);
+      console.log("Downloading 2 ", download2.href);
       setTimeout(() => {
         download2.click();
       }, 500)

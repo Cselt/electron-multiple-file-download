@@ -4,6 +4,8 @@ const url = require('url');
 
 let window = null;
 
+let downloadItems = [];
+
 // Wait until the app is ready
 app.once('ready', () => {
   // Create a new window
@@ -25,6 +27,30 @@ app.once('ready', () => {
     protocol: 'file:',
     slashes: true
   }));
+
+  window.webContents.session.on("will-download", function (event, item, webContents) {
+    console.log("WILL DOWNLOAD ", item);
+
+    downloadItems = [...downloadItems, item];
+
+    item.on('updated', (event, state) => {
+      console.log("state ", state, item.getFilename());
+    });
+
+    item.on("done", (event, state) => {
+      console.log("state ", state);
+
+      if (state === 'completed') {
+        console.log("Successfully downloaded ", item.savePath);
+      }
+
+      const idx = downloadItems.indexOf(item);
+      if (idx > -1) {
+        downloadItems.splice(idx, 1);
+      }
+      console.log("Remaining items ", downloadItems);
+    });
+  });
 
   // Show window when page is ready
   window.once('ready-to-show', () => {
